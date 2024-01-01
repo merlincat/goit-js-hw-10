@@ -1,5 +1,7 @@
 body {
   padding: 32px;
+}
+* {
   box-sizing: border-box;
 }
 a {

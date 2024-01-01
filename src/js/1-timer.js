@@ -38,6 +38,9 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
+  onChange() {
+    startButton.disabled = false;
+  },
   onClose(selectedDates) {
     // Обробка події закриття вікна вибору дати
     if (selectedDates.length > 0) {
@@ -104,7 +107,7 @@ function updateTimer() {
 
 function startCountdown() {
   if (datetimePicker.selectedDates.length === 0) {
-    iziToast.alert({
+    iziToast.warning({
       title: 'Alert',
       message: 'Please select a valid date and time.',
       position: 'topCenter',
