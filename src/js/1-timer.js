@@ -11,6 +11,9 @@ const hoursElement = document.querySelector('[data-hours]');
 const minutesElement = document.querySelector('[data-minutes]');
 const secondsElement = document.querySelector('[data-seconds]');
 
+document.addEventListener('DOMContentLoaded', () => {
+  startButton.disabled = true;
+});
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
