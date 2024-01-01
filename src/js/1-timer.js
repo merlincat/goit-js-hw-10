@@ -4,6 +4,12 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 let userSelectedDate;
+const startButton = document.querySelector('[data-start]');
+const inputPicker = document.querySelector('#datetime-picker');
+const daysElement = document.querySelector('[data-days]');
+const hoursElement = document.querySelector('[data-hours]');
+const minutesElement = document.querySelector('[data-minutes]');
+const secondsElement = document.querySelector('[data-seconds]');
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -39,7 +45,7 @@ const options = {
 };
 
 // Ініціалізуйте Flatpickr з переданими параметрами
-const datetimePicker = flatpickr('#datetime-picker', options);
+const datetimePicker = flatpickr(inputPicker, options);
 
 function validateSelectedDate(date) {
   const currentDate = new Date();
@@ -49,21 +55,18 @@ function validateSelectedDate(date) {
     iziToast.error({
       title: 'Error',
       message: 'Please choose a date in the future',
+      position: 'topCenter',
     });
 
     // Деактивація кнопки "Start", якщо обрана дата в минулому
     startButton.disabled = true;
+    inputPicker.disabled = false;
   } else {
     // Активація кнопки "Start", якщо обрана дата в майбутньому
     startButton.disabled = false;
+    inputPicker.disabled = true;
   }
 }
-
-const startButton = document.querySelector('[data-start]');
-const daysElement = document.querySelector('[data-days]');
-const hoursElement = document.querySelector('[data-hours]');
-const minutesElement = document.querySelector('[data-minutes]');
-const secondsElement = document.querySelector('[data-seconds]');
 
 let countdownInterval;
 function updateTimer() {
@@ -74,6 +77,8 @@ function updateTimer() {
   if (timeDifference < 0) {
     clearInterval(countdownInterval);
     startButton.disabled = false;
+    inputPicker.disabled = false;
+
     daysElement.textContent = '00';
     hoursElement.textContent = '00';
     minutesElement.textContent = '00';
@@ -81,6 +86,7 @@ function updateTimer() {
     iziToast.success({
       title: 'Success',
       message: 'Countdown timer has ended!',
+      position: 'topCenter',
     });
     return;
   }
@@ -98,6 +104,7 @@ function startCountdown() {
     iziToast.alert({
       title: 'Alert',
       message: 'Please select a valid date and time.',
+      position: 'topCenter',
     });
     return;
   }
